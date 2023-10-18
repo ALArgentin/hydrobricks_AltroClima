@@ -150,7 +150,7 @@ void SettingsModel::AddBrickForcing(const string& name) {
         m_selectedBrick->forcing.push_back(Precipitation);
     } else if (name == "temperature") {
         m_selectedBrick->forcing.push_back(Temperature);
-    } else if (name == "radiation") {
+    } else if (name == "r_solar") {
         m_selectedBrick->forcing.push_back(Radiation);
     } else {
         throw InvalidArgument(_("The provided forcing is not yet supported."));
@@ -221,7 +221,7 @@ void SettingsModel::AddProcessForcing(const string& name) {
         m_selectedProcess->forcing.push_back(PET);
     } else if (name == "temperature") {
         m_selectedProcess->forcing.push_back(Temperature);
-    } else if (name == "radiation") {
+    } else if (name == "r_solar") {
         m_selectedProcess->forcing.push_back(Radiation);
     } else {
         throw InvalidArgument(_("The provided forcing is not yet supported."));
@@ -320,7 +320,7 @@ void SettingsModel::AddSplitterForcing(const string& name) {
         m_selectedSplitter->forcing.push_back(Precipitation);
     } else if (name == "temperature") {
         m_selectedSplitter->forcing.push_back(Temperature);
-    } else if (name == "radiation") {
+    } else if (name == "r_solar") {
         m_selectedSplitter->forcing.push_back(Radiation);
     } else {
         throw InvalidArgument(_("The provided forcing is not yet supported."));
@@ -438,7 +438,7 @@ void SettingsModel::GenerateSnowpacks(const string& snowMeltProcess) {
             AddProcessParameter("melting_temperature", 0.0f);
         } else if (snowMeltProcess == "melt:radiation") {
             AddProcessForcing("temperature");
-            AddProcessForcing("radiation");
+            AddProcessForcing("r_solar");
             AddProcessParameter("melt_factor", 3.0f);
             AddProcessParameter("melting_temperature", 0.0f);
             AddProcessParameter("radiation_coefficient", 1361.0f); // Anne-Laure: https://en.wikipedia.org/wiki/Solar_irradiance
@@ -474,7 +474,7 @@ void SettingsModel::GenerateSnowpacksWithWaterRetention(const string& snowMeltPr
             AddProcessParameter("melting_temperature", 0.0f);
         } else if (snowMeltProcess == "melt:radiation") {
             AddProcessForcing("temperature");
-            AddProcessForcing("radiation");
+            AddProcessForcing("r_solar");
             AddProcessParameter("melt_factor", 3.0f);
             AddProcessParameter("melting_temperature", 0.0f);
             AddProcessParameter("radiation_coefficient", 1361.0f); // Anne-Laure: https://en.wikipedia.org/wiki/Solar_irradiance
@@ -1007,7 +1007,7 @@ bool SettingsModel::GenerateStructureSocont(vecStr& landCoverTypes, vecStr& land
             	AddProcessParameter("degree_day_factor", 3.0f);
             } else if (snowMeltProcess == "melt:radiation") {
             	AddBrickProcess("melt", "melt:radiation", "glacier_area_icemelt_storage");
-            	AddProcessForcing("radiation");
+            	AddProcessForcing("r_solar");
             	AddProcessParameter("melt_factor", 3.0f);
             	AddProcessParameter("radiation_coefficient", 1361.0f); // Anne-Laure: https://en.wikipedia.org/wiki/Solar_irradiance
             } else {
